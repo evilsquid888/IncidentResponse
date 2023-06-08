@@ -1,12 +1,44 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <meta http-equiv="refresh" content="0;url={{ ir.cnd.ca.gov }}"/>
-    <link rel="canonical" href="{{ ir.cnd.ca.gov }}"/>
-    <title>Redirecting</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% assign time = 0 %}
+    {% assign targetname = page.target %}
+ 
+    {% if page.time %}
+    {% assign time = page.time %}
+    {% endif %}
+    
+    {% if page.targetname %}
+    {% assign targetname = page.targetname %}
+    {% endif %}
+
+    {% capture title %}Redirecting to {{ targetname }}{% endcapture %}
+    {% if page.targettitle %}
+    {% assign title = page.targettitle %}
+    {% endif %}
+    <meta http-equiv="refresh" content="{{ time }};url={{ page.target }}"/>
+    <link rel="canonical" href="{{ page.target }}"/>
+    <title>{{ title }}</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 40em;
+            margin: 1em auto;
+        }
+    </style>
 </head>
 <body>
-    <p>Document has moved, if you aren't automatically redirected 
-    <a href="{{ ir.cnd.ca.gov }}">go here</a>.</p>
+    <h1>{{ title }}</h1>
+   
+    {% if page.message %}
+    <p>{{ page.message }}</p>
+    {% else %}
+    <p>This document has moved!</p>
+    {% endif %}
+
+    <p>Redirecting to <a href="{{ page.target }}">{{ targetname }}</a> in {{ time }} seconds.</p>
+
 </body>
 </html>
